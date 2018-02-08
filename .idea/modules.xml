@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GPSDemo.iml" filepath="$PROJECT_DIR$/GPSDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GPS-Demo.iml" filepath="$PROJECT_DIR$/.idea/GPS-Demo.iml" />
+      <module fileurl="file://F:\GPSDemo\GPS-Demo\GPSDemo.iml" filepath="F:\GPSDemo\GPS-Demo\GPSDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\GPSDemo\GPS-Demo\app\app.iml" filepath="F:\GPSDemo\GPS-Demo\app\app.iml" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package com.example.sit78.gpsdemo;
+package com.hypnoticLemon.gpsdemo.Service;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,6 +25,13 @@ import android.widget.Toast;
 
 public class GPSTracker extends Service implements LocationListener {
 
+    String TAG = "GPSTracker";
+
+    public GPSTracker(Context context) {
+        this.mContext = context;
+        //getLocation();
+    }
+
     private final Context mContext;
 
     // flag for GPS status
@@ -49,10 +56,6 @@ public class GPSTracker extends Service implements LocationListener {
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
-        this.mContext = context;
-        //getLocation();
-    }
 
     public Location getLocation() {
         try {
@@ -88,7 +91,11 @@ public class GPSTracker extends Service implements LocationListener {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                            } else {
+                                Log.e(TAG, "isNetworkEnabled getLocation: location = null");
                             }
+                        } else {
+
                         }
                     }
                 }
@@ -110,6 +117,8 @@ public class GPSTracker extends Service implements LocationListener {
                                 if (location != null) {
                                     latitude = location.getLatitude();
                                     longitude = location.getLongitude();
+                                } else {
+                                    Log.e(TAG, "isGPSEnabled getLocation:location null ");
                                 }
                             }
                         }
@@ -243,22 +252,52 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.e(TAG, "onLocationChanged: Longitude : " + location.getLongitude() + " | Latitude: " + location.getLatitude());
+
+        int distance = (int) distance(latitude, longitude, location.getLatitude(), location.getLongitude());
+
+        Log.e(TAG, "onLocationChanged:distance:: " + distance);
+        //Toast.makeText(getApplicationContext(), "distance Changed:"+ distance, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
+        Log.e(TAG, "onProviderDisabled: ");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
+        Log.e(TAG, "onProviderEnabled: ");
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.e(TAG, "onStatusChanged: ");
     }
 
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
+    }
+
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }
